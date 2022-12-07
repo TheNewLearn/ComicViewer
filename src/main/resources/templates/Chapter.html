@@ -99,6 +99,9 @@
         <a th:if="${type} == 'article'" th:href="@{'/ArticleContent?id='+${chapter.cid}}">
             <div class="card-body card_view" th:text="${chapter.title}"></div>
         </a>
+        <a th:if="${type} == 'Video'" th:href="@{'/Play?id='+${chapter.id}}">
+            <div class="card-body card_view" th:text="${chapter.title}"></div>
+        </a>
 
     </div>
     <br>

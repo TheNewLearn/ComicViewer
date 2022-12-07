@@ -28,6 +28,10 @@ public class ComicAPI {
     public static final String Art_chapter = "https://api.pingcc.cn/fictionChapter/search/";
     public static final String Art_content = "https://api.pingcc.cn/fictionContent/search/";
 
+    public static final String Video_search = "https://api.pingcc.cn/video/search/title/";
+
+    public static final String Video_chapter = "https://api.pingcc.cn/videoChapter/search/";
+
     private HttpURLConnection connection;
     public List<Comic> fetch(String title){
         BufferedReader reader;
@@ -277,6 +281,100 @@ public class ComicAPI {
                 }
                 reader.close();
                 return content;
+            }
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }finally {
+            this.connection.disconnect();
+        }
+    }
+
+    public List<Video> video_fetch(String title){
+        BufferedReader reader;
+        String line;
+        StringBuffer responseContent = new StringBuffer();
+        List<Video> videos = new ArrayList<Video>();
+        HttpURLConnection connection;
+        try {
+            URL url = new URL(Video_search + title + "/1/10");
+            this.connection = urlconnect(url);
+            int status = this.connection.getResponseCode();
+            if(status!=200){
+                reader = new BufferedReader(new InputStreamReader(this.connection.getErrorStream()));
+                while((line = reader.readLine()) != null){
+                    responseContent.append(line);
+                    System.out.println(line);
+                }
+                reader.close();
+                return null;
+            }else{
+                reader = new BufferedReader(new InputStreamReader(this.connection.getInputStream()));
+                while((line = reader.readLine()) != null){
+                    responseContent.append(line);
+                }
+                JSONObject albums = new JSONObject(responseContent.toString());
+                JSONArray comicdata = albums.getJSONArray("data");
+                for(int i=0; i<comicdata.length();i++){
+                    JSONObject obj = comicdata.getJSONObject(i);
+                    String id = obj.getString("videoId");
+                    String tit = obj.getString("title");
+                    String director = obj.getString("director");
+                    String videoType = obj.getString("videoType");
+                    String actor = obj.getString("actor");
+                    String desc = obj.getString("descs");
+                    String coverpath = obj.getString("cover");
+                    String releaseTime = obj.getString("releaseTime");
+                    Date date = new SimpleDateFormat("yyyy-MM-dd").parse(obj.getString("updateTime"));
+                    videos.add(new Video(id,tit,director,videoType,actor,desc,date,coverpath,releaseTime));
+                }
+                reader.close();
+                return videos;
+            }
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }finally {
+            this.connection.disconnect();
+        }
+
+    }
+
+    public List<VideoChapter> video_chapter_fetch(String id){
+        BufferedReader reader;
+        String line;
+        StringBuffer responseContent = new StringBuffer();
+        List<VideoChapter> videoChapters = new ArrayList<VideoChapter>();
+        try {
+            URL url = new URL(Video_chapter + id);
+            this.connection = urlconnect(url);
+            int status = this.connection.getResponseCode();
+            if(status!=200){
+                reader = new BufferedReader(new InputStreamReader(this.connection.getErrorStream()));
+                while((line = reader.readLine()) != null){
+                    responseContent.append(line);
+                    System.out.println(line);
+                }
+                reader.close();
+                return null;
+            }else{
+                reader = new BufferedReader(new InputStreamReader(this.connection.getInputStream()));
+                while((line = reader.readLine()) != null){
+                    responseContent.append(line);
+                }
+                JSONObject albums = new JSONObject(responseContent.toString());
+                JSONObject content = albums.getJSONObject("data");
+                JSONArray ChapterList = content.getJSONArray("chapterList");
+                int cid = 0;
+                for(int i=0; i<ChapterList.length();i++){
+                    JSONObject obj = ChapterList.getJSONObject(i);
+                    String chid = obj.getString("chapterPath");
+                    String tit = obj.getString("title");
+                    videoChapters.add(new VideoChapter(cid,chid,tit));
+                    cid+=1;
+                }
+                reader.close();
+                return videoChapters;
             }
         }catch (Exception e){
             System.out.println(e);
