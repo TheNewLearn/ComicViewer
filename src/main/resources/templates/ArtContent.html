@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="utf-8">
@@ -73,37 +73,25 @@
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
       <span class="navbar-toggler-icon"></span>
     </button>
-
   </nav>
 </div>
-<!-- Navbar End -->
+<div class="container" >
+  <div class="card" th:each="content:${Content}" style="border: none;" >
+
+    <span th:text="${content}" style="font-size: 18px;margin-top: 5%;" />
 
 
-<div class="container">
-  <h2>Result</h2>
-  <div class="card" style="width:400px" th:each="comic:${Comics}">
-    <img class="card-img-top" th:src="${comic.imgpath}" alt="Card image" style="width:100%;height:300px;">
-    <div class="card-body">
-      <h4 class="card-title" th:text="${comic.title}"></h4>
-      <p class="card-text" th:text="${comic.desc}"></p>
-      <a th:href="@{'/Chapter?id='+${comic.id}+'&type='+${chatype}}" class="btn btn-primary">View</a>
-    </div>
   </div>
   <br>
+
+  <div style="display: inline-block;margin-left: 25%;font-size: 20px;float: left;">
+    <a th:if="${currentindex} gt 0 and ${currentindex} != null" th:href="@{'/ArticleContent?id='+${preindex}}">上一話</a>
+  </div>
+  <div style="display: inline-block;margin-right: 25%;font-size: 20px;float: right;">
+    <a th:if="${currentindex} ge 0 and ${currentindex} != null"  th:href="@{'/ArticleContent?id='+${nextindex}}">下一話</a>
+  </div>
+
 </div>
 
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script th:src="@{/lib/easing/easing.min.js}"></script>
-<script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
-<script th:src="@{/lib/counterup/counterup.min.js}"></script>
-<script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
-
-<!-- Template Javascript -->
-<script th:src="@{/js/main.js}"></script>
 </body>
-
-</html>
-
 </html>

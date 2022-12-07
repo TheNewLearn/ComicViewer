@@ -7,7 +7,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
-
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <!-- Favicon -->
     <link th:href="@{/img/favicon.ico}" rel="icon">
 
@@ -23,6 +24,14 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
+    <script>
+        function changetype(e){
+            var aim = document.getElementById("currenttype");
+            var type = document.getElementById("type")
+            aim.textContent = e.textContent;
+            type.value = e.textContent;
+        }
+    </script>
 </head>
 
 <body>
@@ -63,18 +72,13 @@
     <!-- Navbar Start -->
     <div class="container-fluid p-0">
         <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
-            <a href="index.html" class="navbar-brand ml-lg-3">
+            <a href="/Comic" class="navbar-brand ml-lg-3">
                 <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-book-reader mr-3"></i>Comic</h1>
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
-                <div class="navbar-nav mx-auto py-0">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
-                </div>
-                
-            </div>
+
         </nav>
     </div>
     <!-- Navbar End -->
@@ -89,16 +93,17 @@
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <button class="btn btn-outline-light bg-white text-body px-4 dropdown-toggle" type="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Comic</button>
+                            aria-haspopup="true" aria-expanded="false" id="currenttype">Comic</button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Courses 1</a>
-                            <a class="dropdown-item" href="#">Courses 2</a>
-                            <a class="dropdown-item" href="#">Courses 3</a>
+                            <a class="dropdown-item" id="comic_a" onclick="changetype(this)">Comic</a>
+                            <a class="dropdown-item" id="video_a" onclick="changetype(this)">Video</a>
+                            <a class="dropdown-item" id="article_a" onclick="changetype(this)">article</a>
                         </div>
                     </div>
 
 
                     <input id="comicname" type="text" name="search" class="form-control border-light" style="padding: 30px 25px;" placeholder="Keyword">
+                    <input id="type" type="hidden" name="type" value="Comic">
                     <div class="input-group-append">
                         <button class="btn btn-secondary px-4 px-lg-5">Search</button>
                     </div>
@@ -111,8 +116,6 @@
     </div>
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/lib/easing/easing.min.js}"></script>
     <script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
     <script th:src="@{/lib/counterup/counterup.min.js}"></script>

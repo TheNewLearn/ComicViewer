@@ -67,18 +67,14 @@
 <!-- Navbar Start -->
 <div class="container-fluid p-0">
     <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
-        <a href="index.html" class="navbar-brand ml-lg-3">
+        <a href="/Comic" class="navbar-brand ml-lg-3">
             <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-book-reader mr-3"></i>Comic</h1>
         </a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
-            <div class="navbar-nav mx-auto py-0">
-                <a href="index.html" class="nav-item nav-link active">Home</a>
-            </div>
 
-        </div>
+
     </nav>
 </div>
 <div class="container" >
@@ -90,9 +86,11 @@
     </div>
     <br>
 
-    <div style="display: inline-block;text-align: center;margin-left: 25%;font-size: 25px;">
-        <a th:if="${currentindex} gt 0 and ${currentindex} != null" th:href="@{'/ComicContent?id='+${preindex}}">上一話</a>
-        <a th:if="${currentindex} ge 0 and ${currentindex} != null" th:href="@{'/ComicContent?id='+${nextindex}}">下一話</a>
+    <div style="display: inline-block;margin-left: 25%;font-size: 20px;float: left;">
+        <a th:if="${currentindex} gt 0 and ${currentindex} != null"  th:href="@{'/ComicContent?id='+${preindex}}">上一話</a>
+    </div>
+    <div style="display: inline-block;margin-right: 25%;font-size: 20px;float: right;">
+        <a th:if="${currentindex} ge 0 and ${currentindex} != null"  th:href="@{'/ComicContent?id='+${nextindex}}">下一話</a>
     </div>
 
 </div>
